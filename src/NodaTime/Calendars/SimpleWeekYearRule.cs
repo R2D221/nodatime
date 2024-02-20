@@ -230,5 +230,23 @@ namespace NodaTime.Calendars
                     : startOfWeekContainingStartOfCalendarYear + 7;
             }
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(this, obj)) { return true; }
+            if (obj is not SimpleWeekYearRule other) { return false; }
+
+            return
+                this.minDaysInFirstWeek == other.minDaysInFirstWeek
+                && this.firstDayOfWeek == other.firstDayOfWeek
+                && this.irregularWeeks == other.irregularWeeks;
+        }
+
+        public override int GetHashCode()
+            => HashCodeHelper.Initialize()
+            .Hash(minDaysInFirstWeek)
+            .Hash(firstDayOfWeek)
+            .Hash(irregularWeeks)
+            .Value;
     }
 }
